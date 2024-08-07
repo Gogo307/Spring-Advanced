@@ -1,6 +1,7 @@
 package bg.softuni.fireplace.config;
 
 import bg.softuni.fireplace.repository.UserRepository;
+import bg.softuni.fireplace.service.impl.FireplaceUserDetailsService;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -54,8 +55,8 @@ public class SecurityConfig {
     }
 
     @Bean
-    public MobileleUserDetailsService userDetailsService(UserRepository userRepository) {
-        return new MobileleUserDetailsService(userRepository);
+    public FireplaceUserDetailsService userDetailsService(UserRepository userRepository) {
+        return new FireplaceUserDetailsService(userRepository);
     }
 
     @Bean
