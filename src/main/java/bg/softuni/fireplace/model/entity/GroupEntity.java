@@ -18,6 +18,8 @@ public class GroupEntity extends BaseEntity {
     @Column(name = "description")
     private String description;
 
+    //private Integer count
+
     @Column(name = "members")
     @OneToMany()
     private Set<UserEntity> users;

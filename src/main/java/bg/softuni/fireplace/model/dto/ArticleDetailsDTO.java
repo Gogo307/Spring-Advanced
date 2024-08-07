@@ -1,5 +1,8 @@
-package bg.softuni.fireplace.model.entity;
+package bg.softuni.fireplace.model.dto;
 
+import bg.softuni.fireplace.model.entity.CommentEntity;
+import bg.softuni.fireplace.model.entity.PictureEntity;
+import bg.softuni.fireplace.model.entity.UserEntity;
 import bg.softuni.fireplace.model.enums.ArticleCategoryEnum;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -9,11 +12,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
-@Entity
-@Table(name = "articles")
-public class ArticleEntity extends BaseEntity {
+public class ArticleDetailsDTO {
+
+    private Long id;
 
     @Length(min = 5, max = 100, message = "Title should be between 5 and 100 symbols.")
     @Column(nullable = false)
@@ -31,20 +33,17 @@ public class ArticleEntity extends BaseEntity {
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate date;
-    @ManyToOne
-  //  @MapsId("id")
+
     private UserEntity author;
 
-    @OneToMany //(targetEntity = CommentEntity.class, mappedBy = "route", cascade = CascadeType.ALL)
     private List<CommentEntity> comments;
 
-    @OneToMany//(mappedBy = "route", fetch = FetchType.EAGER)
     private List<PictureEntity> pictures;
 
-
-    public ArticleEntity() {
+    public ArticleDetailsDTO() {
         this.comments = new ArrayList<>();
         this.pictures = new ArrayList<>();
+
     }
 
     public String getTitle() {
@@ -53,22 +52,6 @@ public class ArticleEntity extends BaseEntity {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
     }
 
     public String getDescription() {
@@ -85,6 +68,22 @@ public class ArticleEntity extends BaseEntity {
 
     public void setArticleCategoryEnum(ArticleCategoryEnum articleCategoryEnum) {
         this.articleCategoryEnum = articleCategoryEnum;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 
     public UserEntity getAuthor() {
@@ -110,5 +109,4 @@ public class ArticleEntity extends BaseEntity {
     public void setPictures(List<PictureEntity> pictures) {
         this.pictures = pictures;
     }
-
 }

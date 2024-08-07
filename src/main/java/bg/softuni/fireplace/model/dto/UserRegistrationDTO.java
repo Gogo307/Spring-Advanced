@@ -20,6 +20,9 @@ public class UserRegistrationDTO {
     @Max(119)
     private Integer age;
 
+    public UserRegistrationDTO() {
+    }
+
     @Override
     public String toString() {
         return "UserRegistrationDTO{" +

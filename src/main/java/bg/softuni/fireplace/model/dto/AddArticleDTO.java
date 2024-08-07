@@ -1,29 +1,29 @@
-package bg.softuni.fireplace.model.entity;
+package bg.softuni.fireplace.model.dto;
 
+import bg.softuni.fireplace.model.entity.CommentEntity;
+import bg.softuni.fireplace.model.entity.PictureEntity;
+import bg.softuni.fireplace.model.entity.UserEntity;
 import bg.softuni.fireplace.model.enums.ArticleCategoryEnum;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.lang.reflect.Type;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
-@Entity
-@Table(name = "articles")
-public class ArticleEntity extends BaseEntity {
+public class AddArticleDTO {
 
+    @NotNull(message = "Title cannot be null.")
     @Length(min = 5, max = 100, message = "Title should be between 5 and 100 symbols.")
-    @Column(nullable = false)
     private String title;
+
     @Column(columnDefinition = "TEXT")
     private String description;
-
-    @NotNull(message = "Category cannot be null.")
-    @Enumerated(EnumType.STRING)
-    private ArticleCategoryEnum articleCategoryEnum;
 
     @NotNull(message = "Content cannot be null.")
     @Length(min = 10, message = "Minimal length is 10 symbols.")
@@ -31,20 +31,20 @@ public class ArticleEntity extends BaseEntity {
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate date;
-    @ManyToOne
-  //  @MapsId("id")
-    private UserEntity author;
 
-    @OneToMany //(targetEntity = CommentEntity.class, mappedBy = "route", cascade = CascadeType.ALL)
+    @Enumerated(EnumType.STRING)
+    @NotNull(message = "A category has to be chosen.")
+    private ArticleCategoryEnum articleCategoryEnum;
+
+    private UserEntity author;
+    //TODO check if the comments need to be involved
     private List<CommentEntity> comments;
 
-    @OneToMany//(mappedBy = "route", fetch = FetchType.EAGER)
     private List<PictureEntity> pictures;
 
-
-    public ArticleEntity() {
-        this.comments = new ArrayList<>();
+    public AddArticleDTO() {
         this.pictures = new ArrayList<>();
+        this.comments = new ArrayList<>();
     }
 
     public String getTitle() {
@@ -53,6 +53,14 @@ public class ArticleEntity extends BaseEntity {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getContent() {
@@ -69,14 +77,6 @@ public class ArticleEntity extends BaseEntity {
 
     public void setDate(LocalDate date) {
         this.date = date;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public ArticleCategoryEnum getArticleCategoryEnum() {
@@ -110,5 +110,20 @@ public class ArticleEntity extends BaseEntity {
     public void setPictures(List<PictureEntity> pictures) {
         this.pictures = pictures;
     }
+    /*
+    public static AddArticleDTO empty() {
+        return new AddArticleDTO(null);
+    }
 
+     */
 }
+/*
+    @NotNull(message = "{add.offer.description.length}")
+    @Size(message = "{add.offer.description.length}",
+            min = 5,
+            max = 500) String description,//not necessarily from message source
+    @NotNull @PositiveOrZero Integer mileage,
+    @NotNull @PositiveOrZero Integer price,
+    @NotNull EngineTypeEnum engineType
+
+ */

@@ -29,13 +29,6 @@ public class RegistrationController {
     public String register() {
         return "system-register";
     }
-
-    /*
-        @WarnIfExecutionExceeds(
-                threshold = 1000
-        )
-
-     */
     @PreAuthorize("isAnonymous()")
     @PostMapping("/register")
     public String register(UserRegistrationDTO registerDTO) {
