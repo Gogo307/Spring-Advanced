@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "pictures")
 public class PictureEntity extends BaseEntity{
+
+    @Column(nullable = false)
     private String title;
 
     @Column(nullable = false)

@@ -3,6 +3,8 @@ package bg.softuni.fireplace.model.entity;
 
 import jakarta.persistence.*;
 
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 import org.hibernate.annotations.JdbcTypeCode;
@@ -33,6 +35,8 @@ public class UserEntity extends BaseEntity {
     private String username;
 
     @Positive
+    @Min(1)
+    @Max(118)
     private Integer age;
 
     @ManyToOne

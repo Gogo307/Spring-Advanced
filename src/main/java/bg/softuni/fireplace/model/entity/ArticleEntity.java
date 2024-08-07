@@ -11,8 +11,8 @@ import java.util.Set;
 @Table(name = "articles")
 public class ArticleEntity extends BaseEntity {
 
+    @Column(nullable = false)
     private String name;
-
     @Column(columnDefinition = "TEXT")
     private String description;
 
