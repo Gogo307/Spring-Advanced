@@ -33,13 +33,16 @@ public class FireplaceUserDetailsService implements UserDetailsService {
     private static UserDetails map(UserEntity userEntity) {
 
         return new FireplaceUserDetails(
-                userEntity.getUuid(),
-                userEntity.getEmail(),
+                        userEntity.getUuid(),
+                        userEntity.getEmail(),
+                userEntity.getRoles().stream().map(UserRoleEntity::getRole).map(FireplaceUserDetailsService::map).toList(),
                 userEntity.getPassword(),
-                userEntity.getLevel(),
-                userEntity.getRoles().stream().map(UserRoleEntity::getRole).map(FireplaceUserDetailsService::map).toList()
+                userEntity.getUsername(),
+                userEntity.getAge(),
+                userEntity.getArticles(),
+                userEntity.getComments()
 
-        );
+                );
     }
 
     private static GrantedAuthority map(UserRoleEnum role) {
