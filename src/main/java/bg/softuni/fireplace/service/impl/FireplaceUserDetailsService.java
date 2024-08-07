@@ -20,23 +20,23 @@ public class FireplaceUserDetailsService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username)
+    public UserDetails loadUserByUsername(String email)
             throws UsernameNotFoundException {
 
         return userRepository
-                .findByUsername(username)
+                .findByEmail(email)
                 .map(FireplaceUserDetailsService::map)
                 .orElseThrow(
-                        () -> new UsernameNotFoundException("User with username " + username + " not found!"));
+                        () -> new UsernameNotFoundException("User with email " + email + " not found!"));
     }
 
     private static UserDetails map(UserEntity userEntity) {
 
         return new FireplaceUserDetails(
                 userEntity.getUuid(),
-                userEntity.get
                 userEntity.getEmail(),
                 userEntity.getPassword(),
+                userEntity.getLevel(),
                 userEntity.getRoles().stream().map(UserRoleEntity::getRole).map(FireplaceUserDetailsService::map).toList()
 
         );
