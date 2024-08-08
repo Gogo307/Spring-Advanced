@@ -20,12 +20,14 @@ public class ArticleDetailsDTO {
     @Length(min = 5, max = 100, message = "Title should be between 5 and 100 symbols.")
     @Column(nullable = false)
     private String title;
+    @NotNull(message = "Content cannot be null.")
+    @Length(min = 5, max = 100, message = "Content should be between 5 and 100 symbols.")
     @Column(columnDefinition = "TEXT")
     private String description;
 
     @NotNull(message = "Category cannot be null.")
     @Enumerated(EnumType.STRING)
-    private ArticleCategoryEnum articleCategoryEnum;
+    private ArticleCategoryEnum articleCategory;
 
     @NotNull(message = "Content cannot be null.")
     @Length(min = 10, message = "Minimal length is 10 symbols.")
@@ -33,6 +35,9 @@ public class ArticleDetailsDTO {
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate date;
+
+    @Column(name = "views", columnDefinition = "int default 0")
+    private Integer views;
 
     private UserEntity author;
 
@@ -62,12 +67,12 @@ public class ArticleDetailsDTO {
         this.description = description;
     }
 
-    public ArticleCategoryEnum getArticleCategoryEnum() {
-        return articleCategoryEnum;
+    public ArticleCategoryEnum articleCategory() {
+        return articleCategory;
     }
 
-    public void setArticleCategoryEnum(ArticleCategoryEnum articleCategoryEnum) {
-        this.articleCategoryEnum = articleCategoryEnum;
+    public void setArticleCategoryEnum(ArticleCategoryEnum articleCategory) {
+        this.articleCategory = articleCategory;
     }
 
     public String getContent() {
@@ -116,5 +121,21 @@ public class ArticleDetailsDTO {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Integer getViews() {
+        return views;
+    }
+
+    public void setViews(Integer views) {
+        this.views = views;
+    }
+
+    public ArticleCategoryEnum getArticleCategory() {
+        return articleCategory;
+    }
+
+    public void setArticleCategory(ArticleCategoryEnum articleCategory) {
+        this.articleCategory = articleCategory;
     }
 }

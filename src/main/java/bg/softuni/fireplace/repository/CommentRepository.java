@@ -1,5 +1,6 @@
 package bg.softuni.fireplace.repository;
 
+import bg.softuni.fireplace.model.entity.ArticleEntity;
 import bg.softuni.fireplace.model.entity.CommentEntity;
 import bg.softuni.fireplace.model.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,8 +12,8 @@ import java.util.Optional;
 @Repository
 public interface CommentRepository extends JpaRepository<CommentEntity, Long> {
 
-   //Optional<List<CommentEntity>> findCommentsByArticleOwner (UserEntity articleOwner);
+   Optional<List<CommentEntity>> findCommentsEntitiesByArticle (Optional<ArticleEntity> articleOwner);
 
-   Optional<List<CommentEntity>> findCommentsByAuthor(UserEntity author);
+   Optional<List<CommentEntity>> findCommentsEntitiesByAuthor(Optional<UserEntity> author);
 
 }

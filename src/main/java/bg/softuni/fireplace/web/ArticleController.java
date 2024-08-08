@@ -23,7 +23,7 @@ public class ArticleController {
         this.articleService = articleService;
     }
 
-    @ModelAttribute("allEngineTypes")
+    @ModelAttribute("allArticleCategories")
     public ArticleCategoryEnum[] allArticleCategories() {
         return ArticleCategoryEnum.values();
     }
@@ -49,7 +49,7 @@ public class ArticleController {
         }
 
 
-        articleService.createArticle(addArticleDTO);
+        articleService.addArticleDTO(addArticleDTO);
 
         return "redirect:/articles/all";
     }

@@ -20,7 +20,7 @@ public class RestConfig {
     }
 
     @Bean("articleRestClient")
-    public RestClient offersRestClient(ArticleApiConfig articleApiConfig,
+    public RestClient articleRestClient(ArticleApiConfig articleApiConfig,
                                        ClientHttpRequestInterceptor requestInterceptor) {
         return RestClient
                 .builder()

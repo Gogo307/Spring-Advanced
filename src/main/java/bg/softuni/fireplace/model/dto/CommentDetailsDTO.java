@@ -1,32 +1,43 @@
-package bg.softuni.fireplace.model.entity;
+package bg.softuni.fireplace.model.dto;
 
+import bg.softuni.fireplace.model.entity.ArticleEntity;
+import bg.softuni.fireplace.model.entity.UserEntity;
 import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-import org.springframework.security.core.userdetails.User;
+import jakarta.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.Length;
 
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "comments")
-public class CommentEntity extends BaseEntity{
+public class CommentDetailsDTO {
+
+    private Long id;
 
     @Column(nullable = false)
     private LocalDateTime created;
 
+    @NotNull(message = "Content cannot be null.")
+    @Length(min = 5, max = 500, message = "Content should be between 5 and 500 symbols.")
+
     @Column(columnDefinition = "TEXT", nullable = false)
     private String text;
 
-    @ManyToOne
+    @NotNull
     private UserEntity author;
 
-    @ManyToOne
+    @NotNull
     private ArticleEntity article;
 
-    public CommentEntity() {
+    public CommentDetailsDTO() {
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public LocalDateTime getCreated() {
         return created;
@@ -59,6 +70,4 @@ public class CommentEntity extends BaseEntity{
     public void setArticle(ArticleEntity article) {
         this.article = article;
     }
-
-
 }

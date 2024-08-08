@@ -27,7 +27,7 @@ public class UserRegistrationDTO {
     public String toString() {
         return "UserRegistrationDTO{" +
                 "username='" + username + '\'' +
-                ", password='" + (password == null ? "N/A" : "[PROVIDED]") + '\'' +
+                ", password='" + password  + '\'' +
                 ", email='" + email + '\'' +
                 ", age='" + age + '\'' +
                 '}';

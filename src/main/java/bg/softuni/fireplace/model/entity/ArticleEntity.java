@@ -23,7 +23,7 @@ public class ArticleEntity extends BaseEntity {
 
     @NotNull(message = "Category cannot be null.")
     @Enumerated(EnumType.STRING)
-    private ArticleCategoryEnum articleCategoryEnum;
+    private ArticleCategoryEnum articleCategory;
 
     @NotNull(message = "Content cannot be null.")
     @Length(min = 10, message = "Minimal length is 10 symbols.")
@@ -31,6 +31,9 @@ public class ArticleEntity extends BaseEntity {
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate date;
+
+    @Column(name = "views", columnDefinition = "int default 0")
+    private Integer views;
     @ManyToOne
   //  @MapsId("id")
     private UserEntity author;
@@ -79,14 +82,6 @@ public class ArticleEntity extends BaseEntity {
         this.description = description;
     }
 
-    public ArticleCategoryEnum getArticleCategoryEnum() {
-        return articleCategoryEnum;
-    }
-
-    public void setArticleCategoryEnum(ArticleCategoryEnum articleCategoryEnum) {
-        this.articleCategoryEnum = articleCategoryEnum;
-    }
-
     public UserEntity getAuthor() {
         return author;
     }
@@ -111,4 +106,19 @@ public class ArticleEntity extends BaseEntity {
         this.pictures = pictures;
     }
 
+    public Integer getViews() {
+        return views;
+    }
+
+    public void setViews(Integer views) {
+        this.views = views;
+    }
+
+    public ArticleCategoryEnum getArticleCategory() {
+        return articleCategory;
+    }
+
+    public void setArticleCategory(ArticleCategoryEnum articleCategory) {
+        this.articleCategory = articleCategory;
+    }
 }

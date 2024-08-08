@@ -1,5 +1,6 @@
 package bg.softuni.fireplace.service;
 
+import bg.softuni.fireplace.model.dto.AddArticleDTO;
 import bg.softuni.fireplace.model.dto.ArticleDetailsDTO;
 import org.springframework.stereotype.Service;
 
@@ -8,7 +9,9 @@ import java.util.List;
 @Service
 public interface ArticleService {
 
-    ArticleDetailsDTO addArticle(ArticleDetailsDTO articleDetailsDTO);
+    AddArticleDTO addArticleDTO(AddArticleDTO addArticleDTO);
+
+    ArticleDetailsDTO editArticle(Long id, ArticleDetailsDTO articleDetailsDTO);
 
     List<ArticleDetailsDTO> findAllArticles();
 
@@ -17,4 +20,7 @@ public interface ArticleService {
     ArticleDetailsDTO findArticleById(Long id);
 
     void deleteArticle(Long id);
+
+    ArticleDetailsDTO getArticleDetails(Long id);
+    List<ArticleDetailsDTO> getAllArticleDetails();
 }

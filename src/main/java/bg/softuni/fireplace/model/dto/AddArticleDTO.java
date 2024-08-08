@@ -19,7 +19,7 @@ import java.util.List;
 public class AddArticleDTO {
 
     @NotNull(message = "Title cannot be null.")
-    @Length(min = 5, max = 100, message = "Title should be between 5 and 100 symbols.")
+    @Length(min = 5, max = 500, message = "Title should be between 5 and 500 symbols.")
     private String title;
 
     @Column(columnDefinition = "TEXT")
@@ -32,9 +32,12 @@ public class AddArticleDTO {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate date;
 
+    @Column(name = "views", columnDefinition = "int default 0")
+    private Integer views;
+
     @Enumerated(EnumType.STRING)
     @NotNull(message = "A category has to be chosen.")
-    private ArticleCategoryEnum articleCategoryEnum;
+    private ArticleCategoryEnum articleCategory;
 
     private UserEntity author;
     //TODO check if the comments need to be involved
@@ -79,12 +82,12 @@ public class AddArticleDTO {
         this.date = date;
     }
 
-    public ArticleCategoryEnum getArticleCategoryEnum() {
-        return articleCategoryEnum;
+    public ArticleCategoryEnum articleCategory() {
+        return articleCategory;
     }
 
-    public void setArticleCategoryEnum(ArticleCategoryEnum articleCategoryEnum) {
-        this.articleCategoryEnum = articleCategoryEnum;
+    public void setArticleCategoryEnum(ArticleCategoryEnum articleCategory) {
+        this.articleCategory = articleCategory;
     }
 
     public UserEntity getAuthor() {
@@ -110,12 +113,28 @@ public class AddArticleDTO {
     public void setPictures(List<PictureEntity> pictures) {
         this.pictures = pictures;
     }
-    /*
-    public static AddArticleDTO empty() {
-        return new AddArticleDTO(null);
+
+    public Integer getViews() {
+        return views;
     }
 
-     */
+    public void setViews(Integer views) {
+        this.views = views;
+    }
+
+    public ArticleCategoryEnum getArticleCategory() {
+        return articleCategory;
+    }
+
+    public void setArticleCategory(ArticleCategoryEnum articleCategory) {
+        this.articleCategory = articleCategory;
+    }
+
+
+    public static AddArticleDTO empty() {
+        return new AddArticleDTO();
+    }
+
 }
 /*
     @NotNull(message = "{add.offer.description.length}")
