@@ -1,5 +1,6 @@
 package bg.softuni.fireplace.config;
 
+import bg.softuni.fireplace.service.JwtService;
 import bg.softuni.fireplace.service.UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,7 +19,7 @@ public class RestConfig {
         return RestClient.create();
     }
 
-    @Bean("offersRestClient")
+    @Bean("articleRestClient")
     public RestClient offersRestClient(ArticleApiConfig articleApiConfig,
                                        ClientHttpRequestInterceptor requestInterceptor) {
         return RestClient
@@ -28,6 +29,7 @@ public class RestConfig {
                 .requestInterceptor(requestInterceptor)
                 .build();
     }
+
 
     @Bean
     public ClientHttpRequestInterceptor requestInterceptor(UserService userService,

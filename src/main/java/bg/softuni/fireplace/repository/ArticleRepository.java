@@ -10,5 +10,7 @@ import java.util.Optional;
 
 @Repository
 public interface ArticleRepository extends JpaRepository<ArticleEntity, Long> {
-    Optional<List<ArticleEntity>> findArticlesByAuthor(UserEntity author);
+    // Optional<List<ArticleEntity>> findArticlesByAuthor(UserEntity author);
+
+    List<ArticleEntity> findArticlesByAuthor(Optional author);
 }
