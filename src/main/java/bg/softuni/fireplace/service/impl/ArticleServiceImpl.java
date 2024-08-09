@@ -8,6 +8,7 @@ import bg.softuni.fireplace.repository.ArticleRepository;
 import bg.softuni.fireplace.repository.UserRepository;
 import bg.softuni.fireplace.service.ArticleService;
 import bg.softuni.fireplace.service.exception.ObjectNotFoundException;
+import bg.softuni.fireplace.web.ArticleController;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -22,6 +23,8 @@ import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.client.RestClient;
+
 import java.util.stream.Collectors;
 
 @Service
@@ -29,15 +32,15 @@ import java.util.stream.Collectors;
 public class ArticleServiceImpl implements ArticleService {
 
     private final Logger LOGGER = LoggerFactory.getLogger(ArticleServiceImpl.class);
-    private final RestController articleRestController;
+    private final RestClient articleRestClient;
     private final ModelMapper modelMapper;
     private final ArticleRepository articleRepository;
     private final UserRepository userRepository;
 
     @Autowired
-    public ArticleServiceImpl(@Qualifier("articleRestClient")RestController articleRestController, ModelMapper modelMapper,
+    public ArticleServiceImpl(@Qualifier("articleRestClient")RestClient articleRestClient, ModelMapper modelMapper,
                               ArticleRepository articleRepository, UserRepository userRepository) {
-        this.articleRestController = articleRestController;
+        this.articleRestClient = articleRestClient;
         this.modelMapper = modelMapper;
         this.articleRepository = articleRepository;
         this.userRepository = userRepository;
@@ -45,15 +48,31 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public AddArticleDTO addArticleDTO(AddArticleDTO addArticleDTO) {
+        ArticleEntity article = this.modelMapper.map(addArticleDTO, ArticleEntity.class);
+        try{
+            this.articleRepository.saveAndFlush(article);
+            return this.modelMapper.map(article, AddArticleDTO.class);
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
 
+    @Override
+    public void createArticle(AddArticleDTO addArticleDTO) {
+        LOGGER.info("Creating new offer...");
 
-        return null;
+        articleRestClient
+                .post()
+                .uri("/offers")
+                .body(addArticleDTO)
+                .retrieve();
     }
 
     @Override
     public ArticleDetailsDTO editArticle(Long id, ArticleDetailsDTO articleDetailsDTO) {
         ArticleEntity article = this.articleRepository.findById(id)
-                .orElseThrow(() -> new ObjectNotFoundException("Article with the given id was not found!",404));
+                .orElseThrow(() -> new ObjectNotFoundException("Article with the given id was not found!", 404));
 
         article.setViews(articleDetailsDTO.getViews());
         article.setContent(articleDetailsDTO.getContent());
@@ -62,20 +81,6 @@ public class ArticleServiceImpl implements ArticleService {
 
         return this.modelMapper.map(this.articleRepository.saveAndFlush(article), ArticleDetailsDTO.class);
     }
-/*
-    @Override
-    public ArticleServiceModel addArticle(ArticleServiceModel articleServiceModel) {
-        Article article = this.modelMapper.map(articleServiceModel, Article.class);
-        try{
-            this.articleRepository.saveAndFlush(article);
-            return this.modelMapper.map(article, ArticleServiceModel.class);
-        }catch (Exception e){
-            e.printStackTrace();
-            return null;
-        }
-    }
-
- */
 
     @Override
     public List<ArticleDetailsDTO> findAllArticles() {
@@ -114,7 +119,13 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public ArticleDetailsDTO getArticleDetails(Long id) {
-        return null;
+
+        return articleRestClient
+                .get()
+                .uri("/articles/{id}", id)
+                .accept(MediaType.APPLICATION_JSON)
+                .retrieve()
+                .body(ArticleDetailsDTO.class);
     }
 
     @Override

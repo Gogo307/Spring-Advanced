@@ -1,7 +1,6 @@
 package bg.softuni.fireplace.model.dto;
 
 import bg.softuni.fireplace.model.entity.CommentEntity;
-import bg.softuni.fireplace.model.entity.PictureEntity;
 import bg.softuni.fireplace.model.entity.UserEntity;
 import bg.softuni.fireplace.model.enums.ArticleCategoryEnum;
 import jakarta.persistence.*;
@@ -43,10 +42,7 @@ public class AddArticleDTO {
     //TODO check if the comments need to be involved
     private List<CommentEntity> comments;
 
-    private List<PictureEntity> pictures;
-
     public AddArticleDTO() {
-        this.pictures = new ArrayList<>();
         this.comments = new ArrayList<>();
     }
 
@@ -106,13 +102,6 @@ public class AddArticleDTO {
         this.comments = comments;
     }
 
-    public List<PictureEntity> getPictures() {
-        return pictures;
-    }
-
-    public void setPictures(List<PictureEntity> pictures) {
-        this.pictures = pictures;
-    }
 
     public Integer getViews() {
         return views;

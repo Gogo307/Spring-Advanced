@@ -13,6 +13,8 @@ public interface ArticleService {
 
     ArticleDetailsDTO editArticle(Long id, ArticleDetailsDTO articleDetailsDTO);
 
+    void createArticle(AddArticleDTO addArticleDTO);
+
     List<ArticleDetailsDTO> findAllArticles();
 
     List<ArticleDetailsDTO> findAllArticlesByUserId(Long userId);

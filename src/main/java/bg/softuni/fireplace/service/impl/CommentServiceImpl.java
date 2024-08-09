@@ -36,7 +36,14 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public AddCommentDTO addCommentDTO(AddCommentDTO addCommentDTO) {
-        return null;
+        CommentEntity comment = this.modelMapper.map(addCommentDTO, CommentEntity.class);
+        try{
+            this.commentRepository.saveAndFlush(comment);
+            return this.modelMapper.map(comment, AddCommentDTO.class);
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
@@ -45,7 +52,6 @@ public class CommentServiceImpl implements CommentService {
                 .orElseThrow(() -> new ObjectNotFoundException("Comment with the given id was not found!", 404));
 
         comment.setText(commentDetailsDTO.getText());
-        comment.setCreated(commentDetailsDTO.getCreated());
         return this.modelMapper.map(this.commentRepository.saveAndFlush(comment), CommentDetailsDTO.class);
     }
 

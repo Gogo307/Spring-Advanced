@@ -30,6 +30,16 @@ public class RestConfig {
                 .build();
     }
 
+    @Bean("groupRestClient")
+    public RestClient articleRestClient(GroupApiConfig groupApiConfig,
+                                        ClientHttpRequestInterceptor requestInterceptor) {
+        return RestClient
+                .builder()
+                .baseUrl(groupApiConfig.getBaseUrl())
+                .defaultHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)
+                .requestInterceptor(requestInterceptor)
+                .build();
+    }
 
     @Bean
     public ClientHttpRequestInterceptor requestInterceptor(UserService userService,

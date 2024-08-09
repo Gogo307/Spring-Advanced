@@ -1,7 +1,6 @@
 package bg.softuni.fireplace.model.dto;
 
 import bg.softuni.fireplace.model.entity.CommentEntity;
-import bg.softuni.fireplace.model.entity.PictureEntity;
 import bg.softuni.fireplace.model.entity.UserEntity;
 import bg.softuni.fireplace.model.enums.ArticleCategoryEnum;
 import jakarta.persistence.*;
@@ -43,11 +42,9 @@ public class ArticleDetailsDTO {
 
     private List<CommentEntity> comments;
 
-    private List<PictureEntity> pictures;
 
     public ArticleDetailsDTO() {
         this.comments = new ArrayList<>();
-        this.pictures = new ArrayList<>();
 
     }
 
@@ -105,14 +102,6 @@ public class ArticleDetailsDTO {
 
     public void setComments(List<CommentEntity> comments) {
         this.comments = comments;
-    }
-
-    public List<PictureEntity> getPictures() {
-        return pictures;
-    }
-
-    public void setPictures(List<PictureEntity> pictures) {
-        this.pictures = pictures;
     }
 
     public Long getId() {

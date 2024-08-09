@@ -27,6 +27,9 @@ public class AddCommentDTO {
     public AddCommentDTO() {
     }
 
+    public static AddCommentDTO empty() {
+        return new AddCommentDTO();
+    }
     public LocalDateTime getCreated() {
         return created;
     }

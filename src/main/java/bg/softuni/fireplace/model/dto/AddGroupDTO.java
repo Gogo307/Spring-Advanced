@@ -20,6 +20,11 @@ public class AddGroupDTO {
     public AddGroupDTO() {
     }
 
+    public static AddGroupDTO empty() {
+        return new AddGroupDTO();
+    }
+
+
     public String getName() {
         return name;
     }
